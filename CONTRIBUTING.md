@@ -6,7 +6,7 @@
 
     cd framework
     python -m venv .venv && source .venv/bin/activate
-    pip install -e ".[dev,litellm,cli]"
+    pip install -e ".[dev,cli]"
 
 ## 提交前检查
 
