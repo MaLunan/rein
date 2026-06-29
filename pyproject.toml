@@ -29,7 +29,7 @@ dependencies = [
 
 [project.urls]
 Homepage = "https://github.com/MaLunan/rein"
-Documentation = "https://malunan.github.io/rein/"
+Documentation = "https://malunan.github.io/rein-docs/"
 Repository = "https://github.com/MaLunan/rein"
 Changelog = "https://github.com/MaLunan/rein/blob/main/CHANGELOG.md"
 
