@@ -82,10 +82,10 @@ ANTHROPIC_API_KEY=sk-ant-...
 _README = """\
 # {name}
 
-用 [rein](https://example.com/rein) 写的 agent 项目(由 `rein new` 生成)。
+用 [rein](https://github.com/MaLunan/rein) 写的 agent 项目(由 `rein new` 生成)。
 
 ## 跑起来
-1. 安装依赖:`pip install rein[litellm]`
+1. 安装依赖:`pip install rein-agent`
 2. 复制 `.env.example` 为 `.env`,填入你的 key
 3. `python main.py`
 
@@ -101,6 +101,16 @@ max_tokens = 200000
 timeout_s = 120
 permission = "allow"   # allow / ask / deny
 """
+
+_GITIGNORE = """\
+.env
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.DS_Store
+"""
+
 
 _TEMPLATES = {
     "minimal": _MINIMAL_MAIN,
@@ -143,4 +153,6 @@ def create_project(name: str, template: str = "minimal", target_dir: str | Path 
     (project / ".env.example").write_text(_ENV_EXAMPLE, encoding="utf-8")
     (project / "README.md").write_text(_README.format(name=name), encoding="utf-8")
     (project / "rein.toml").write_text(_REIN_TOML, encoding="utf-8")
+    # 安全:生成 .gitignore,避免用户把含 key 的 .env 提交进 git
+    (project / ".gitignore").write_text(_GITIGNORE, encoding="utf-8")
     return project

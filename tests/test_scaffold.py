@@ -10,7 +10,9 @@ def test_minimal_生成文件齐全(tmp_path):
     assert proj.name == "myagent"
     # 极简:就这几个文件,不生成空目录
     names = sorted(p.name for p in proj.iterdir())
-    assert names == [".env.example", "README.md", "main.py", "rein.toml"]
+    assert names == [".env.example", ".gitignore", "README.md", "main.py", "rein.toml"]
+    # 安全:.gitignore 必须忽略 .env(防含 key 的 .env 被提交进 git)
+    assert ".env" in (proj / ".gitignore").read_text(encoding="utf-8")
 
 
 def test_生成的main_语法正确可编译(tmp_path):
