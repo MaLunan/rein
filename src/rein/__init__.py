@@ -14,7 +14,7 @@
     print(agent.run("现在几号?"))
 """
 
-__version__ = "0.0.1"
+__version__ = "0.1.0"
 
 from rein.a2a import A2AServer, serve_a2a
 from rein.agent import Agent, Chat, tool
@@ -34,6 +34,7 @@ from rein.ir import (
     ToolSpec,
     Usage,
 )
+from rein.log import disable_logging, enable_logging
 from rein.loop import aresume, arun, astream, run, step
 from rein.middleware import StepContext
 from rein.otel import export_run
@@ -79,7 +80,9 @@ __all__ = [
     "SlidingWindow",
     "SummarizeCompaction",
     "estimate_tokens",
-    # 可观测导出(M3,OTel 走 extras)
+    # 可观测:结构化日志 + OTel 导出
+    "enable_logging",
+    "disable_logging",
     "export_run",
     # 扩展层(M4)
     "StepContext",

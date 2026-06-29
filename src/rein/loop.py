@@ -18,12 +18,14 @@
 
 import asyncio
 import time
+import uuid
 from collections.abc import AsyncIterator
 
 from rein.circuit import check_circuit, signature
 from rein.compaction import CompactionStrategy
 from rein.config import LoopConfig
 from rein.ir import Completion, Message, StreamChunk, Usage
+from rein.log import logger
 from rein.middleware import Middleware, StepContext, dispatch, permission_middleware
 
 # Provider 只用于类型标注;为避免「核心层 import 具体实现」,这里用最小依赖。
@@ -215,12 +217,25 @@ async def arun(
     mws = (middlewares or []) + [permission_middleware]
     start = time.monotonic()
     steps: list[Step] = []
+    trace_id = uuid.uuid4().hex[:8]
+    logger.info(
+        "run started",
+        extra={
+            "trace_id": trace_id,
+            "messages": len(session.messages),
+            "tools": len(registry.specs() or []),
+        },
+    )
 
     while not session.done:
         reason = check_circuit(session, config, start)
         if reason:
             session.stop_reason = reason
             session.done = True
+            logger.warning(
+                "circuit tripped",
+                extra={"trace_id": trace_id, "reason": reason, "iteration": session.iteration},
+            )
             break
 
         # M3:问模型前压缩上下文(纯变换 messages,不破坏可序列化/恢复)
@@ -234,9 +249,24 @@ async def arun(
         for r in recs:
             r.index = len(steps)  # 统一重排流水账序号(全局连续)
             steps.append(r)
+            if r.kind == "tool":
+                # 密钥脱敏:只记工具名/是否出错/耗时,绝不记参数与结果内容
+                logger.info(
+                    "tool done",
+                    extra={
+                        "trace_id": trace_id,
+                        "tool": r.summary.split(" → ")[0],
+                        "error": bool(r.is_error),
+                        "dur_s": round(r.duration_s or 0, 3),
+                    },
+                )
 
         if interrupt is not None:  # M2:在工具边界产出中断态,返回给调用方等待 resume
             session.stop_reason = "interrupted"  # 不置 done —— 要能从此 session 恢复
+            logger.info(
+                "run interrupted",
+                extra={"trace_id": trace_id, "interrupt": interrupt.type},
+            )
             return RunResult(
                 status="interrupted",
                 output=_last_assistant_text(session),
@@ -248,6 +278,16 @@ async def arun(
                 interrupt=interrupt,
             )
 
+    logger.info(
+        "run finished",
+        extra={
+            "trace_id": trace_id,
+            "stop_reason": session.stop_reason or "done",
+            "iterations": session.iteration,
+            "tokens": session.usage.input_tokens + session.usage.output_tokens,
+            "elapsed_s": round(time.monotonic() - start, 3),
+        },
+    )
     return RunResult(
         status="done",
         output=_last_assistant_text(session),
