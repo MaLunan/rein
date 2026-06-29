@@ -3,7 +3,7 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [project]
-name = "rein"
+name = "rein-agent"
 version = "0.0.1"
 description = "一个极薄但生产级的单-agent harness 框架:5 行把任意大模型变成能调工具、自己循环干活的 agent"
 readme = "README.md"
