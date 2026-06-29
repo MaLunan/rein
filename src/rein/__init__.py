@@ -14,7 +14,7 @@
     print(agent.run("现在几号?"))
 """
 
-__version__ = "0.1.0"
+__version__ = "0.2.0"
 
 from rein.a2a import A2AServer, serve_a2a
 from rein.agent import Agent, Chat, tool

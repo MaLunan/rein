@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "rein-agent"
-version = "0.1.0"
+version = "0.2.0"
 description = "一个极薄但生产级的单-agent harness 框架:5 行把任意大模型变成能调工具、自己循环干活的 agent"
 readme = "README.md"
 requires-python = ">=3.11"
@@ -13,7 +13,7 @@ license-files = ["LICENSE"]
 authors = [{ name = "Rein Authors" }]
 keywords = ["agent", "llm", "harness", "ai", "tool-use", "litellm", "agentic"]
 classifiers = [
-    "Development Status :: 3 - Alpha",
+    "Development Status :: 4 - Beta",
     "Intended Audience :: Developers",
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3.11",
