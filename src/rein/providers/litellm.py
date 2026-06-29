@@ -53,7 +53,7 @@ class LiteLLMProvider:
             import litellm
         except ImportError as e:
             raise ImportError(
-                "使用 LiteLLMProvider 需要安装 litellm:pip install 'rein[litellm]'"
+                "litellm 未安装(它应随 rein-agent 自动安装);如缺失请 pip install litellm"
             ) from e
 
         lite_messages = [self._to_lite_message(m) for m in messages]
@@ -78,7 +78,7 @@ class LiteLLMProvider:
             import litellm
         except ImportError as e:
             raise ImportError(
-                "使用 LiteLLMProvider 需要安装 litellm:pip install 'rein[litellm]'"
+                "litellm 未安装(它应随 rein-agent 自动安装);如缺失请 pip install litellm"
             ) from e
 
         lite_messages = [self._to_lite_message(m) for m in messages]

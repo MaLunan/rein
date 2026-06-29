@@ -13,7 +13,7 @@
     python examples/minimal.py
 
 没装 litellm / 没配 key 时,会得到一个清晰的报错提示 —— 这正是设计意图:
-本框架核心只依赖 pydantic + anyio,litellm 是可选 extras(pip install 'rein[litellm]')。
+本框架装完(pip install rein-agent)即接入真实大模型——litellm 已是核心依赖。
 不联网的完整演示请看 examples/mock_demo.py。
 """
 

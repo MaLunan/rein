@@ -1,7 +1,7 @@
 """真实厂商冒烟测试(M1)—— 默认 skip,需要真实 key + 联网才跑。
 
 如何开启:
-    pip install 'rein[litellm]'
+    pip install rein-agent
     export ANTHROPIC_API_KEY=sk-...        # 或对应厂商的 key
     export REIN_SMOKE=1
     .venv/bin/python -m pytest tests/test_smoke_providers.py -v
