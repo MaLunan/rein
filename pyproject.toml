@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "rein-agent"
-version = "0.0.1"
+version = "0.1.0"
 description = "一个极薄但生产级的单-agent harness 框架:5 行把任意大模型变成能调工具、自己循环干活的 agent"
 readme = "README.md"
 requires-python = ">=3.11"
@@ -25,6 +25,7 @@ classifiers = [
 dependencies = [
     "pydantic>=2.0",
     "anyio>=4.0",
+    "litellm>=1.0",
 ]
 
 [project.urls]
@@ -34,7 +35,6 @@ Repository = "https://github.com/MaLunan/rein"
 Changelog = "https://github.com/MaLunan/rein/blob/main/CHANGELOG.md"
 
 [project.optional-dependencies]
-litellm = ["litellm>=1.0"]
 docker = ["docker>=7.0"]
 otel = ["opentelemetry-sdk", "opentelemetry-exporter-otlp"]
 cli = ["typer>=0.9"]
