@@ -2,13 +2,14 @@
 
 > **5 行代码,把任意大模型变成能调工具、自己循环干活的 agent。**
 
+[![test](https://github.com/MaLunan/rein/actions/workflows/test.yml/badge.svg)](https://github.com/MaLunan/rein/actions/workflows/test.yml)
+
 Rein 是一个**极薄但生产级**的单-agent harness(智能体运行时)框架。反 LangChain 式的重抽象,聚焦把"单 agent 的 loop + 工具 + 可控 + 可观测"做到极致。
 
 ## 安装
 
 ```bash
-pip install rein-agent              # 核心(仅 pydantic + anyio)
-pip install rein-agent   # 接入真实大模型(100+ 厂商)
+pip install rein-agent   # 装完即接入真实大模型(100+ 厂商,经 LiteLLM)
 ```
 
 ## 快速开始

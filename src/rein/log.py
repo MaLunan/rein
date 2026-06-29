@@ -69,9 +69,7 @@ def enable_logging(
     if json:
         handler.setFormatter(JsonFormatter())
     else:
-        handler.setFormatter(
-            logging.Formatter("%(asctime)s [%(levelname)s] rein: %(message)s")
-        )
+        handler.setFormatter(logging.Formatter("%(asctime)s [%(levelname)s] rein: %(message)s"))
     logger.addHandler(handler)
     logger.setLevel(level)
     # 不向 root logger 冒泡,避免和用户的 root handler 重复打印。
